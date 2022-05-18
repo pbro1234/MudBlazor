@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -256,11 +257,18 @@ namespace MudBlazor
             switch (direction)
             {
                 case SwipeDirection.LeftToRight:
-                    Previous();
+                    if (EnableLeftArrow())
+                    {
+                        Previous();
+                    }
                     break;
 
                 case SwipeDirection.RightToLeft:
-                    Next();
+                    if (EnableRightArrow())
+                    {
+                        Next();
+                    }
+
                     break;
             }
         }
@@ -317,6 +325,46 @@ namespace MudBlazor
         {
             await DisposeAsync(true);
             GC.SuppressFinalize(this);
+        }
+
+        private bool EnableLeftArrow()
+        {
+            if (ShowArrows)
+            {
+                if (ItemsSource != default)
+                {
+                    return true;
+                }
+
+                if (SelectedIndex <= 0 || (Items.Count >= SelectedIndex + 1 && !Items[SelectedIndex].AllowLeft))
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+            return false;
+        }
+
+        private bool EnableRightArrow()
+        {
+            if (ShowArrows)
+            {
+                if (ItemsSource != default)
+                {
+                    return true;
+                }
+
+                if (SelectedIndex < 0 || (Items.Count >= SelectedIndex + 1 && !Items[SelectedIndex].AllowRight))
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+            return false;
         }
 
 

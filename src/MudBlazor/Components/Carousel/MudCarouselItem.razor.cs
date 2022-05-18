@@ -40,6 +40,14 @@ namespace MudBlazor
         [Category(CategoryTypes.Carousel.Behavior)]
         public RenderFragment ChildContent { get; set; }
 
+        [Parameter]
+        [Category(CategoryTypes.Carousel.Behavior)]
+        public bool AllowRight { get; set; } = true;
+
+        [Parameter]
+        [Category(CategoryTypes.Carousel.Behavior)]
+        public bool AllowLeft { get; set; } = true;
+
         [CascadingParameter] protected internal MudBaseItemsControl<MudCarouselItem> Parent { get; set; }
 
         [CascadingParameter] public bool RightToLeft { get; set; }
@@ -56,7 +64,7 @@ namespace MudBlazor
         /// </summary>
         [Parameter]
         [Category(CategoryTypes.Carousel.Appearance)]
-        public Transition Transition { get; set; } = Transition.Slide;
+        public Transition Transition { get; set; } = Transition.Fade;
 
         /// <summary>
         /// The name of custom transition on entrance time
